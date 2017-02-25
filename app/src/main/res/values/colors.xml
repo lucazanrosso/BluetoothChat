@@ -4,6 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorSecondaryText">#8a000000</color>
-    <color name="colorSend">#64B5F6</color>
-    <color name="colorReceive">#BBDEFB</color>
+    <color name="colorSend">#C5CAE9</color>
+    <color name="colorReceive">#E8EAF6</color>
 </resources>

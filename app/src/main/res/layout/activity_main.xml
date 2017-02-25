@@ -10,19 +10,19 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
         <LinearLayout
-            android:id="@+id/conversationLayout"
+            android:id="@+id/layout_conversation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
-            <TextView
-                style="@style/ReceiveText"
-                android:text="Ciao mi chiamo Arduino"/>
+            <!--<TextView-->
+                <!--style="@style/ReceiveText"-->
+                <!--android:text="Hi, my name is Arduino"/>-->
 
-            <TextView
-                style="@style/SendText"
-                android:text="Piacere di conoscerti, io sono Android"
-                android:gravity="right"/>
+            <!--<TextView-->
+                <!--style="@style/SendText"-->
+                <!--android:text="Nice to meet you, I'm Android"-->
+                <!--android:layout_weight="1"/>-->
         </LinearLayout>
     </ScrollView>
     <LinearLayout

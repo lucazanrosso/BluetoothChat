@@ -15,7 +15,7 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,10 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     public final String TAG = "SI";
     public final int MESSAGE_READ = 1;
-//    public final int MESSAGE_WRITE = 2;
 
-    ImageButton sendButton;
-    TextView textView;
     Handler mHandler;
 
     private BluetoothAdapter btAdapter = null;
@@ -37,15 +34,15 @@ public class MainActivity extends AppCompatActivity {
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static String address = "98:D3:32:20:68:87";
 
-    /** Called when the activity is first created. */
+    LinearLayout conversationLayout;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
 
-        sendButton = (ImageButton) findViewById(R.id.button_send);                  // button LED ON         // button LED OFF
-        textView = (TextView) findViewById(R.id.text);      // for display the received data from the Arduino
+        conversationLayout = (LinearLayout) findViewById(R.id.layout_conversation);
 
         mHandler = new Handler() {
             public void handleMessage(android.os.Message msg) {
@@ -53,15 +50,11 @@ public class MainActivity extends AppCompatActivity {
                     case MESSAGE_READ:
                         byte[] readBuf = (byte[]) msg.obj;
                         String readString = new String(readBuf, 0, msg.arg1);
-                        Toast.makeText(getApplicationContext(), readString, Toast.LENGTH_SHORT).show();
+                        View inflatedLayout = getLayoutInflater().inflate(R.layout.text_view_received, null, false);
+                        TextView textView = (TextView) inflatedLayout.findViewById(R.id.textview_receive);
                         textView.setText(readString);
+                        conversationLayout.addView(inflatedLayout);
                         break;
-//                    case MESSAGE_WRITE:
-//                        byte[] writeBuf = (byte[]) msg.obj;
-//                        String writeString = new String(writeBuf);
-//                        Toast.makeText(getApplicationContext(), writeString, Toast.LENGTH_SHORT).show();
-//                        textView.setText(writeString);
-//                        break;
                 }
             }
         };
@@ -75,19 +68,11 @@ public class MainActivity extends AppCompatActivity {
         String message = editText.getText().toString();
         mConnectedThread.write(message);
         editText.setText(null);
+        View inflatedLayout = getLayoutInflater().inflate(R.layout.text_view_sent, null, false);
+        TextView textView = (TextView) inflatedLayout.findViewById(R.id.textview_send);
+        textView.setText(message);
+        conversationLayout.addView(inflatedLayout);
     }
-
-//    private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
-////        if(Build.VERSION.SDK_INT >= 10){
-////            try {
-////                final Method  m = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", new Class[] { UUID.class });
-////                return (BluetoothSocket) m.invoke(device, MY_UUID);
-////            } catch (Exception e) {
-////                Log.e(TAG, "Could not create Insecure RFComm Connection",e);
-////            }
-////        }
-//        return  device.createRfcommSocketToServiceRecord(MY_UUID);
-//    }
 
     private class ConnectedThread extends Thread {
         private final BluetoothSocket mmSocket;
@@ -161,8 +146,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
     @Override
     public void onResume() {
         super.onResume();
@@ -180,7 +163,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             btSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
         } catch (IOException e) {
-            errorExit("Fatal Error", "In onResume() and socket create failed: " + e.getMessage() + ".");
+            Toast.makeText(getBaseContext(), "Fatal Error" + " - " + "In onResume() and socket create failed: " + e.getMessage() + ".", Toast.LENGTH_LONG).show();
+            finish();
         }
 
         // Discovery is resource intensive.  Make sure it isn't going on
@@ -196,7 +180,8 @@ public class MainActivity extends AppCompatActivity {
             try {
                 btSocket.close();
             } catch (IOException e2) {
-                errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
+                Toast.makeText(getBaseContext(), "Fatal Error" + " - " + "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".", Toast.LENGTH_LONG).show();
+                finish();
             }
         }
 
@@ -205,39 +190,5 @@ public class MainActivity extends AppCompatActivity {
 
         mConnectedThread = new ConnectedThread(btSocket);
         mConnectedThread.start();
-    }
-//
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//
-//        Log.d(TAG, "...In onPause()...");
-//
-//        try     {
-//            btSocket.close();
-//        } catch (IOException e2) {
-//            errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
-//        }
-//    }
-
-//    private void checkBTState() {
-    // Check for Bluetooth support and then check to make sure it is turned on
-    // Emulator doesn't support Bluetooth and will return null
-//        if(btAdapter==null) {
-//            errorExit("Fatal Error", "Bluetooth not support");
-//        } else {
-//            if (btAdapter.isEnabled()) {
-//                Log.d(TAG, "...Bluetooth ON...");
-//            } else {
-//                //Prompt user to turn on Bluetooth
-//                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//                startActivityForResult(enableBtIntent, 1);
-//            }
-//        }
-//    }
-
-    private void errorExit(String title, String message){
-        Toast.makeText(getBaseContext(), title + " - " + message, Toast.LENGTH_LONG).show();
-        finish();
     }
 }
