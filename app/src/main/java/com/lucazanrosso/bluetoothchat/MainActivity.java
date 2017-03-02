@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                         // Send the obtained bytes to the UI activity.
                         mHandler.obtainMessage(MESSAGE_READ, numBytes, -1, mmBuffer)
                                 .sendToTarget();
-                    } else SystemClock.sleep(200);
+                    } else SystemClock.sleep(100);
                 } catch (IOException e) {
                     Log.d(TAG, "Input stream was disconnected", e);
                     break;
@@ -186,7 +186,6 @@ public class MainActivity extends AppCompatActivity {
         }
         mConnectedThread = new ConnectedThread(btSocket);
         mConnectedThread.start();
-        Toast.makeText(getApplicationContext(), "Connected with: " + ADDRESS, Toast.LENGTH_LONG).show();
     }
 
     @Override
