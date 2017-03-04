@@ -190,12 +190,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        mConnectedThread.cancel();
-        try {
-            btSocket.close();
-        } catch (IOException e2) {
-            finish();
-        }
         super.onDestroy();
+        if (mConnectedThread != null) {
+            mConnectedThread.cancel();
+            try {
+                btSocket.close();
+            } catch (IOException e2) {
+                finish();
+            }
+        }
     }
 }
