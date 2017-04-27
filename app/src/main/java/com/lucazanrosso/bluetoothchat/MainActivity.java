@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +67,13 @@ public class MainActivity extends AppCompatActivity {
                         TextView textView = (TextView) inflatedLayout.findViewById(R.id.textview_receive);
                         textView.setText(readString);
                         conversationLayout.addView(inflatedLayout);
+                        final ScrollView scrollview = ((ScrollView) findViewById(R.id.scrollview));
+                        scrollview.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                scrollview.fullScroll(ScrollView.FOCUS_DOWN);
+                            }
+                        });
                         break;
                 }
             }
@@ -81,6 +89,13 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = (TextView) inflatedLayout.findViewById(R.id.textview_send);
         textView.setText(message);
         conversationLayout.addView(inflatedLayout);
+        final ScrollView scrollview = ((ScrollView) findViewById(R.id.scrollview));
+        scrollview.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollview.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        });
     }
 
     private class ConnectedThread extends Thread {
