@@ -16,12 +16,16 @@
         android:id="@+id/paired_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_margin="8dp"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="searchDevices"
-        android:text="@string/search"
-        android:layout_marginTop="16dp"/>
+        android:text="@string/search" />
     <ListView
         android:id="@+id/list_found"
         android:layout_width="match_parent"
