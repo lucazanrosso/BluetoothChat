@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BluetoothChat</string>
+    <string name="app_name">Bluetooth Chat</string>
     <string name="image_button">Send Button</string>
     <string name="paired_devices">PAIRED DEVICES</string>
     <string name="search">SEARCH OTHER DEVICES</string>
