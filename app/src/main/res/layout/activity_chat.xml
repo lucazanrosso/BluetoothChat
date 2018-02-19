@@ -1,78 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!--<ScrollView-->
-        <!--android:id="@+id/scrollview"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_above="@+id/layout_edit"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_alignParentStart="true">-->
-        <!--<LinearLayout-->
-            <!--android:id="@+id/layout_conversation"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="vertical"-->
-            <!--android:paddingLeft="16dp"-->
-            <!--android:paddingStart="16dp"-->
-            <!--android:paddingRight="16dp"-->
-            <!--android:paddingEnd="16dp"-->
-            <!--android:paddingTop="16dp"-->
-            <!--android:paddingBottom="4dp">-->
-            <!--&lt;!&ndash;<TextView&ndash;&gt;-->
-            <!--&lt;!&ndash;style="@style/ReceiveText"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:text="Hi, my name is Arduino"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;<TextView&ndash;&gt;-->
-            <!--&lt;!&ndash;style="@style/SendText"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:text="Nice to meet you, I'm Android"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_weight="1"/>&ndash;&gt;-->
-        <!--</LinearLayout>-->
-    <!--</ScrollView>-->
+    android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"
-        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:reverseLayout="true"
-        android:paddingLeft="16dp"
-        android:paddingStart="16dp"
-        android:paddingRight="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="4dp"
         android:clipToPadding="false"
-        app:layout_constraintBottom_toTopOf="@id/layout_edit" />
-
-
-    <LinearLayout
-        android:id="@+id/layout_edit"
-        android:layout_width="match_parent"
+        android:scrollbars="vertical"
+        android:paddingTop="16dp"
+        app:layout_constraintBottom_toTopOf="@id/text_edit" />
+    <EditText
+        android:id="@+id/text_edit"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:paddingLeft="8dp"
-        android:paddingStart="8dp"
-        android:paddingRight="4dp"
-        android:paddingEnd="4dp"
-        android:paddingBottom="4dp"
-        app:layout_constraintBottom_toBottomOf="parent">
-        <EditText
-            android:id="@+id/text_edit"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textCapSentences" />
-        <ImageButton
-            android:id="@+id/button_send"
-            android:layout_width="45dp"
-            android:layout_weight="0"
-            android:layout_height="45dp"
-            android:background="@null"
-            android:tint="@color/colorAccent"
-            android:src="@drawable/ic_send_black_24dp"
-            android:onClick="sendMessage"
-            android:contentDescription="@string/image_button"/>
-    </LinearLayout>
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:inputType="textCapSentences"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_send"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_weight="1"/>
+    <ImageButton
+        android:id="@+id/button_send"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@null"
+        android:contentDescription="@string/image_button"
+        android:onClick="sendMessage"
+        android:src="@drawable/ic_send_black_24dp"
+        android:tint="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>

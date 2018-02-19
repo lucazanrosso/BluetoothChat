@@ -17,8 +17,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public View mView;
-        public ViewHolder(View v) {
+        private View mView;
+        private ViewHolder(View v) {
             super(v);
             mView = v;
         }
@@ -36,15 +36,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
         // create a new view
         View v;
         if (viewType == 0)
-            v = (View) LayoutInflater.from(parent.getContext())
+            v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.text_view_sent, parent, false);
          else
-            v = (View) LayoutInflater.from(parent.getContext())
+            v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.text_view_received, parent, false);
 
         // set the view's size, margins, paddings and layout parameters
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        return new ViewHolder(v);
     }
 
     // Replace the contents of a view (invoked by the layout manager)

@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showPairedAndAvailableDevices() {
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-        ListView pairedList = (ListView) findViewById(R.id.paired_list);
+        ListView pairedList = findViewById(R.id.paired_list);
         if (pairedDevices.size() > 0) {
             // There are paired devices. Get the name and address of each paired device.
             for (BluetoothDevice device : pairedDevices) {
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(mReceiver, filter);
 
-        availableList = (ListView) findViewById(R.id.list_found);
+        availableList = findViewById(R.id.list_found);
         availableList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
