@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -74,6 +75,10 @@ public class MainActivity extends AppCompatActivity {
                 pairedNames.add(device.getName());
                 pairedAddresses.add(device.getAddress());
             }
+        } else {
+            TextView noneText = findViewById(R.id.none_text);
+            noneText.setVisibility(View.VISIBLE);
+            pairedList.setVisibility(View.GONE);
         }
         pairedList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, pairedNames));
         pairedList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
