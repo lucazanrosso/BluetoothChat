@@ -58,15 +58,16 @@ public class MainActivity extends AppCompatActivity {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null)
             Toast.makeText(this, "Bluetooth not found in this device", Toast.LENGTH_SHORT).show();
-        else
-        if (!mBluetoothAdapter.isEnabled()) {
+        else if (!mBluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-        } else
-            showPairedAndAvailableDevices();
+        } else {
+            showPairedDevices();
+            searchAvailableDevices(null);
+        }
     }
 
-    private void showPairedAndAvailableDevices() {
+    private void showPairedDevices() {
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         ListView pairedList = findViewById(R.id.paired_list);
         if (pairedDevices.size() > 0) {
@@ -87,7 +88,9 @@ public class MainActivity extends AppCompatActivity {
                 connect(pairedNames.get(i), pairedAddresses.get(i));
             }
         });
+    }
 
+    public void searchAvailableDevices(View view) {
         int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
@@ -135,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void run() {
-            mmBuffer = new byte[32];
+            mmBuffer = new byte[1024];
             int numBytes; // bytes returned from read()
 
             // Keep listening to the InputStream until an exception occurs.
@@ -181,8 +184,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK)
-            showPairedAndAvailableDevices();
+        if (resultCode == RESULT_OK) {
+            showPairedDevices();
+            searchAvailableDevices(null);
+        }
         if (resultCode == RESULT_CANCELED)
             finish();
     }
@@ -229,17 +234,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
-
-    public void searchDevices(View view) {
-        int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
-        mBluetoothAdapter.startDiscovery();
-        // Register for broadcasts when a device is discovered.
-        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(mReceiver, filter);
-    }
 
     @Override
     protected void onDestroy() {

@@ -7,7 +7,7 @@ android {
         applicationId "com.lucazanrosso.bluetoothchat"
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 4
+        versionCode 5
         versionName "0.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
